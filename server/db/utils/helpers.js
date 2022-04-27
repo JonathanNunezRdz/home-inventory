@@ -31,13 +31,21 @@ exports.createNameTable = createNameTable;
  * @param {KnexTable} table
  * @param {string} foreignTableName
  */
-function references(table, foreignTableName) {
-	table
-		.integer(`${foreignTableName}_id`)
+function references(
+	table,
+	foreignTableName,
+	notNullable = true,
+	columnName = ''
+) {
+	const definition = table
+		.integer(`${columnName || foreignTableName}_id`)
 		.unsigned()
 		.references('id')
 		.inTable(foreignTableName)
 		.onDelete('CASCADE');
+
+	if (notNullable) definition.notNullable();
+	return definition;
 }
 exports.references = references;
 

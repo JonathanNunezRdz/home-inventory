@@ -5,12 +5,16 @@
 	"main": "knexfile.js",
 	"scripts": {
 		"migrate": "knex migrate:latest",
-		"rollback": "knex migrate:rollback"
+		"rollback": "knex migrate:rollback",
+		"seed": "knex seed:run",
+		"db:up": "docker-compose up -d",
+		"db:down": "docker-compose down"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"bcrypt": "^5.0.1",
 		"dotenv": "^16.0.0",
 		"knex": "^1.0.4",
 		"pg": "^8.7.3"
