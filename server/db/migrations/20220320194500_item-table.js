@@ -1,5 +1,5 @@
 const tableNames = require('../../src/constants/tableNames');
-const { addDefaultColumns, references } = require('../utils/helpers');
+const { addDefaultColumns, references, url } = require('../utils/helpers');
 
 /**
  * @param { import("knex").Knex } knex
@@ -44,10 +44,27 @@ exports.up = async (knex) => {
 		table.dateTime('purchase_date').notNullable();
 		table.dateTime('expiration_date');
 		table.dateTime('last_used');
-		table.float('price').notNullable().defaultTo(0);
+		table.float('purchase_price').notNullable().defaultTo(0);
+		table.float('msrp').notNullable().defaultTo(0);
 		references(table, tableNames.user);
 		references(table, tableNames.item);
-		references(table, tableNames.company, true, 'retailer');
+		references(table, tableNames.company, false, 'retailer');
+		references(table, tableNames.inventory_location);
+		addDefaultColumns(table);
+	});
+
+	await knex.schema.createTable(tableNames.item_image, (table) => {
+		table.increments().notNullable();
+		url(table);
+		references(table, tableNames.item);
+		addDefaultColumns(table);
+	});
+
+	await knex.schema.createTable(tableNames.related_item, (table) => {
+		table.increments().notNullable();
+		references(table, tableNames.item);
+		references(table, tableNames.item, false, 'related_item');
+		addDefaultColumns(table);
 	});
 };
 
@@ -56,6 +73,7 @@ exports.up = async (knex) => {
  * @returns { Promise<void> }
  */
 exports.down = async (knex) => {
+	await knex.schema.dropTable(tableNames.related_item);
 	await knex.schema.dropTable(tableNames.item_info);
 	await knex.schema.dropTable(tableNames.item);
 	await knex.schema.dropTable(tableNames.size);

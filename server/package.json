@@ -7,8 +7,12 @@
 		"migrate": "knex migrate:latest",
 		"rollback": "knex migrate:rollback",
 		"seed": "knex seed:run",
-		"db:up": "docker-compose up -d",
-		"db:down": "docker-compose down"
+		"db:up": "run-script-os",
+		"db:up:linux": "docker compose up -d",
+		"db:up:win32": "docker-compose up -d",
+		"db:down": "run-script-os",
+		"db:down:linux": "docker compose down",
+		"db:down:win32": "docker-compose down"
 	},
 	"keywords": [],
 	"author": "",
@@ -23,6 +27,7 @@
 		"eslint": "^8.11.0",
 		"eslint-config-airbnb-base": "^15.0.0",
 		"eslint-config-prettier": "^8.5.0",
-		"eslint-plugin-import": "^2.25.4"
+		"eslint-plugin-import": "^2.25.4",
+		"run-script-os": "^1.1.6"
 	}
 }
