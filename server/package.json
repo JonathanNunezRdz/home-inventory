@@ -2,7 +2,7 @@
 	"name": "server",
 	"version": "1.0.0",
 	"description": "",
-	"main": "knexfile.js",
+	"main": "index.js",
 	"scripts": {
 		"migrate": "knex migrate:latest",
 		"rollback": "knex migrate:rollback",
@@ -12,15 +12,22 @@
 		"db:up:win32": "docker-compose up -d",
 		"db:down": "run-script-os",
 		"db:down:linux": "docker compose down",
-		"db:down:win32": "docker-compose down"
+		"db:down:win32": "docker-compose down",
+		"start": "node src/index.js",
+		"dev": "nodemon src/index.js",
+		"test": "jest"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
 		"bcrypt": "^5.0.1",
+		"compression": "^1.7.4",
 		"dotenv": "^16.0.0",
+		"express": "^4.18.1",
+		"helmet": "^5.0.2",
 		"knex": "^1.0.4",
+		"morgan": "^1.10.0",
 		"pg": "^8.7.3"
 	},
 	"devDependencies": {
@@ -28,6 +35,9 @@
 		"eslint-config-airbnb-base": "^15.0.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-import": "^2.25.4",
-		"run-script-os": "^1.1.6"
+		"jest": "^28.0.3",
+		"nodemon": "^2.0.16",
+		"run-script-os": "^1.1.6",
+		"supertest": "^6.2.3"
 	}
 }
